@@ -1,0 +1,22 @@
+{
+  "name": "array-etc",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dicksont/array-etc",
+  "authors": [
+    "Dickson Tam <dicksont650@gmail.com>"
+  ],
+  "description": "Collection of supplementary JavaScript Array methods that works across module packaging systems and that can be included piece-wise",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

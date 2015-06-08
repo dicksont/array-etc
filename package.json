@@ -1,0 +1,22 @@
+{
+  "name": "array-etc",
+  "version": "0.0.0",
+  "description": "Collection of supplementary JavaScript Array methods that works across module packaging systems and can be included piece-wise",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dicksont/array-etc.git"
+  },
+  "keywords": [
+    "array",
+    "methods"
+  ],
+  "author": "Dickson Tam <dicksont650@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dicksont/array-etc/issues"
+  },
+  "homepage": "https://github.com/dicksont/array-etc#readme"
+}
