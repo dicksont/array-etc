@@ -1,9 +1,13 @@
 {
   "name": "array-etc",
   "version": "0.0.0",
+  "main": "node/loader.js",
   "description": "Collection of supplementary JavaScript Array methods that works across module packaging systems and can be included piece-wise",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha spec/spec.js"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.4"
   },
   "repository": {
     "type": "git",
