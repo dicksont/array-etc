@@ -32,28 +32,44 @@ describe('Array.prototype.equals', function() {
     arrload(['equals']);
   });
 
-  it('[].equals([])', function() {
-    assert.ok([].equals([]));
+  describe('true', function() {
+    it('[].equals([])', function() {
+      assert.ok([].equals([]));
+    });
+
+    it("[ 'a' ].equals([ 'a' ])", function() {
+      assert.ok(['a'].equals(['a']));
+    });
+
+
+    it("[ 0 ].equals([ 0 ])", function() {
+      assert.ok([ 0 ].equals([ 0 ]));
+    });
   });
 
-  it("[ 'a' ].equals([ 'a' ])", function() {
-    assert.ok(['a'].equals(['a']));
+  describe('false', function() {
+    it("![ '1' ].equals([ 1 ])", function() {
+      assert.ok(!['1'].equals([ 1 ]));
+    });
+
+
+    it("!['a', 'b', 'c'].equals([ 'a', 'b' ])", function() {
+      assert.ok(!['a', 'b','c'].equals(['a', 'b']));
+    });
+
+    it("!['a', 'b', 'c'].equals('abc')", function() {
+      assert.ok(!['a', 'b','c'].equals('abc'));
+    });
+
+    it("![ function() {} ].equals([function() {}])", function() {
+      assert.ok(![ function() {} ].equals([ function() {} ]));
+    });
+
+    it("![ { a: 1 } ].equals({ a: 1})", function() {
+      assert.ok(![{ a: 1 }].equals([{ a: 1 }]));
+    });
   });
 
-  it("![ '1' ].equals([ 1 ])", function() {
-    assert.ok(!['1'].equals([ 1 ]));
-  });
 
-  it("[ 0 ].equals([ 0 ])", function() {
-    assert.ok([ 0 ].equals([ 0 ]));
-  });
-
-  it("!['a', 'b', 'c'].equals([ 'a', 'b' ])", function() {
-    assert.ok(!['a', 'b','c'].equals(['a', 'b']));
-  });
-
-  it("!['a', 'b', 'c'].equals('abc')", function() {
-    assert.ok(!['a', 'b','c'].equals('abc'));
-  });
 
 });
