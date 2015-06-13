@@ -38,9 +38,9 @@ arrload(['equals']);
 
 This should add the methods listed in the array to *Array.prototype*.
 
-##Library Files
+## Library Files
 
-###lib/equals.js
+### lib/equals.js
 This defines a customizable array comparison method anchored at **Array.prototype.equals**. This universal implementation does not use *JSON.stringify*, which is problematic for arrays containing functions.
 
 Comparison is as simple as:
@@ -68,5 +68,5 @@ Array.prototype.equals.eq = function(a,b) {
 }
 ```
 
-##Technical Support
+## Technical Support
 E-mail me if you have problems or questions.
