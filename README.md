@@ -34,10 +34,6 @@ arrload(['equals']);
 
 This should add the methods listed in the array to *Array.prototype*.
 
-##Technical Support
-E-mail me if you have problems.
-
-
 ##Library Files
 
 ###lib/equals.js
@@ -46,3 +42,6 @@ Contains definition for *Array.prototype.equals*:
 ```javascript
 ['a', 'b','c'].equals(['a', 'b'])
 ```
+
+##Technical Support
+E-mail me if you have problems or questions.
