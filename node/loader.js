@@ -29,8 +29,13 @@ var libmap = {
 }
 
 function loadSingle(lib) {
-  if (!libmap[lib]) return;
-  require(libmap[lib]);
+  var path = libmap[lib];
+  if (!path) return;
+
+  var abspath = require.resolve(path);
+
+  delete require.cache[abspath]; // Force reload
+  require(path);
 }
 
 function loadArray(libarr) {
