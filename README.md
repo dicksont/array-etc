@@ -37,11 +37,26 @@ This should add the methods listed in the array to *Array.prototype*.
 ##Library Files
 
 ###lib/equals.js
-Contains definition for *Array.prototype.equals*:
+This defines a customizable array comparison method anchored at **Array.prototype.equals**. This universal implementation does not use *JSON.stringify*, which is problematic for arrays containing functions.
 
+Comparison is as simple as:
 ```javascript
 ['a', 'b','c'].equals(['a', 'b'])
 ```
+
+Because the individual comparison function uses the triple equals operator, *Array.prototype.equals* has the following special-case behaviors:
+- Objects that look the same, but were created at different points will NOT be equal.
+- Functions that look the same, but were created at different points will NOT be equal.
+
+Of course, if you don't like this behavior, you can modify it. You just have to provide your own comparison function. For example, if you want to use *JSON.stringify* for the individual comparisons, you can write:
+
+```javascript
+['a', 'b','c'].equals(['a', 'b'], function(a,b) {
+    return JSON.stringify(a) == JSON.stringify(b);
+});
+```
+
+
 
 ##Technical Support
 E-mail me if you have problems or questions.
