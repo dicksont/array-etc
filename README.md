@@ -21,7 +21,7 @@ npm install array-etc
 Add the corresponding script tag to your page. e.g.
 
 ```html
-<script src="/bower_components/array_etc/lib/equals.js"></script>
+<script src="/bower_components/array-etc/lib/equals.js"></script>
 ```
 
 ### Node
