@@ -56,7 +56,13 @@ Of course, if you don't like this behavior, you can modify it. You just have to 
 });
 ```
 
+And if you don't want to pass in this new comparison function every time, you can replace it with:
 
+```javascript
+Array.prototype.equals.eq = function(a,b) {
+    return JSON.stringify(a) == JSON.stringify(b);
+}
+```
 
 ##Technical Support
 E-mail me if you have problems or questions.
