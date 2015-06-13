@@ -4,7 +4,7 @@
   "main": "node/loader.js",
   "description": "Collection of supplementary JavaScript Array methods that works across module packaging systems and can be included piece-wise",
   "scripts": {
-    "test": "mocha spec/spec.js"
+    "test": "mocha test/test.js"
   },
   "devDependencies": {
     "mocha": "^2.2.4"

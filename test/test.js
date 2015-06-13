@@ -24,4 +24,4 @@
  *
  */
 
- require('./spec_equals.js');
+ require('./test_equals.js');
