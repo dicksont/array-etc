@@ -45,11 +45,11 @@ function loadArray(libarr) {
 }
 
 module.exports = function(lib) {
-  if (lib instanceof String) {
+  if (typeof(lib) == "string") {
     loadSingle(lib);
   } else if (lib instanceof Array) {
     loadArray(lib);
   } else {
-    throw new Error('Parameter lib neither a String nor Array.');
+    throw new Error('array-etc: Parameter lib neither a String nor Array.');
   }
 }
