@@ -60,7 +60,7 @@
  describe('Array.prototype.equals', function() {
    before(function() {
      var arrload = require('../node/loader.js');
-     arrload(['equals']);
+     arrload('equals');
    });
 
    describe('true', function() {

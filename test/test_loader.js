@@ -24,4 +24,22 @@
  *
  */
 
- require('./test_equals.js');
+ var assert = require('assert');
+ var arrload = require('../node/loader.js');
+
+ describe('library loader', function() {
+
+   it('loading via string', function() {
+     arrload('equals');
+     assert.ok(Array.prototype.hasOwnProperty('equals'));
+     delete Array.prototype.equals;
+     assert.ok(!Array.prototype.hasOwnProperty('equals'));
+   })
+
+   it('loading via Array', function() {
+     arrload(['equals']);
+     assert.ok(Array.prototype.hasOwnProperty('equals'));
+     delete Array.prototype.equals;
+     assert.ok(!Array.prototype.hasOwnProperty('equals'));
+   })
+ })
