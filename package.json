@@ -15,7 +15,10 @@
   },
   "keywords": [
     "array",
-    "methods"
+    "methods",
+    "functions",
+    "equals",
+    "equal"
   ],
   "author": "Dickson Tam <dicksont650@gmail.com>",
   "license": "MIT",
