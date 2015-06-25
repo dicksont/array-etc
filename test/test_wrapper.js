@@ -25,21 +25,21 @@
  */
 
  var assert = require('assert');
- var arrload = require('../node/loader.js');
+ var fawrap = require('../node/wrapper.js');
 
- describe('library loader', function() {
+ describe('wrapper', function() {
 
    it('loading via string', function() {
-     arrload('equals');
-     assert.ok(Array.prototype.hasOwnProperty('equals'));
-     delete Array.prototype.equals;
-     assert.ok(!Array.prototype.hasOwnProperty('equals'));
+     var wrapper = fawrap('equals');
+     assert.ok(wrapper.hasOwnProperty('equals'));
+     delete wrapper.equals;
+     assert.ok(!wrapper.hasOwnProperty('equals'));
    })
 
    it('loading via Array', function() {
-     arrload(['equals']);
-     assert.ok(Array.prototype.hasOwnProperty('equals'));
-     delete Array.prototype.equals;
-     assert.ok(!Array.prototype.hasOwnProperty('equals'));
+     var wrapper = fawrap(['equals']);
+     assert.ok(wrapper.hasOwnProperty('equals'));
+     delete wrapper.equals;
+     assert.ok(!wrapper.hasOwnProperty('equals'));
    })
  })
