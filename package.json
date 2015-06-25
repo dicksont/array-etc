@@ -7,7 +7,8 @@
     "test": "mocha test/test_wrapper.js test/test_equals.js"
   },
   "devDependencies": {
-    "mocha": "^2.2.4"
+    "mocha": "^2.2.4",
+    "chai" : "^3.0.0"
   },
   "repository": {
     "type": "git",
