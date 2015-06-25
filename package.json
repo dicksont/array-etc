@@ -1,6 +1,6 @@
 {
   "name": "array-etc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "node/wrapper.js",
   "description": "Collection of supplementary JavaScript Array methods that works across module packaging systems and can be included piece-wise",
   "scripts": {
