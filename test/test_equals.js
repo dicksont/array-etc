@@ -24,80 +24,107 @@
  *
  */
 
- var assert = require('assert');
+(function(factory) {
 
- describe('Array.prototype.equals [w/ JSON.stringify]', function() {
-   before(function() {
-     var arrload = require('../node/loader.js');
-     arrload(['equals']);
+  var arrayFactory, assert;
 
-     Array.prototype.equals.eq = function(a,b) {
+  if (typeof module !== 'undefined' && module && module.exports) { // Node.js & CommonJS
+    arrayFactory = function() { return require('../node/wrapper.js')('equals'); }
+    assert = require('assert');
+  } else {
+    assert = window.assert;
+    arrayFactory = function() {
+      return function(arr) {
+        return arr;
+      }
+    }
+  }
+
+  factory(assert, arrayFactory);
+
+})(function(assert, arrayFactory) {
+  describe('Array.prototype.equals', function() {
+    var array;
+    before(function() {
+      array = arrayFactory();
+    });
+
+    describe('true', function() {
+      it('[].equals([])', function() {
+        assert.ok(array([]).equals([]));
+      });
+
+      it("[ 'a' ].equals([ 'a' ])", function() {
+        assert.ok(array(['a']).equals(['a']));
+      });
+
+
+      it("[ 0 ].equals([ 0 ])", function() {
+        assert.ok(array([0]).equals([ 0 ]));
+      });
+    });
+
+    describe('false', function() {
+      it("![ '1' ].equals([ 1 ])", function() {
+        assert.ok(!array(['1']).equals([ 1 ]));
+      });
+
+
+      it("!['a', 'b', 'c'].equals([ 'a', 'b' ])", function() {
+        assert.ok(!array(['a', 'b','c']).equals(['a', 'b']));
+      });
+
+      it("!['a', 'b', 'c'].equals('abc')", function() {
+        assert.ok(!array(['a', 'b','c']).equals('abc'));
+      });
+
+      it("![ function() {} ].equals([function() {}])", function() {
+        assert.ok(!array([ function() {} ]).equals([ function() {} ]));
+      });
+
+      it("![ { a: 1 } ].equals({ a: 1})", function() {
+        assert.ok(!array([{ a: 1 }]).equals([{ a: 1 }]));
+      });
+    });
+  });
+
+
+   describe('Array.prototype.equals [w/ JSON.stringify]', function() {
+     var array;
+
+     before(function() {
+       array = arrayFactory();
+
+       var fxCompare = function(a,b) {
          return JSON.stringify(a) == JSON.stringify(b);
-     }
-   });
+       };
 
-   describe('true', function() {
-     it("[ { a: 1 } ].equals({ a: 1})", function() {
-       assert.ok([{ a: 1 }].equals([{ a: 1 }]));
+       if (array.equals && array.equals.eq) {
+         array.equals.eq = fxCompare;
+       } else {
+         Array.prototype.equals.eq = fxCompare;
+       }
+       
      });
 
-     it("[ { a: true } ].equals({ a: true })", function() {
-       assert.ok([{ a: true }].equals([{ a: true }]));
-     });
-   });
+     describe('true', function() {
+       it("[ { a: 1 } ].equals({ a: 1})", function() {
+         assert.ok(array([{ a: 1 }]).equals([{ a: 1 }]));
+       });
 
-   describe('false', function() {
-     it("![ { a: 1 } ].equals({ b: 1})", function() {
-       assert.ok(![{ a: 1 }].equals([{ b: 1 }]));
-     });
-
-     it("[ { a: 1 } ].equals({ a: 1, b: 2})", function() {
-       assert.ok(![{ a: 1 }].equals([{ a: 1, b: 2 }]));
-     });
-   });
- });
-
- describe('Array.prototype.equals', function() {
-   before(function() {
-     var arrload = require('../node/loader.js');
-     arrload('equals');
-   });
-
-   describe('true', function() {
-     it('[].equals([])', function() {
-       assert.ok([].equals([]));
+       it("[ { a: true } ].equals({ a: true })", function() {
+         assert.ok(array([{ a: true }]).equals([{ a: true }]));
+       });
      });
 
-     it("[ 'a' ].equals([ 'a' ])", function() {
-       assert.ok(['a'].equals(['a']));
-     });
+     describe('false', function() {
+       it("![ { a: 1 } ].equals({ b: 1})", function() {
+         assert.ok(!array([{ a: 1 }]).equals([{ b: 1 }]));
+       });
 
-
-     it("[ 0 ].equals([ 0 ])", function() {
-       assert.ok([ 0 ].equals([ 0 ]));
+       it("[ { a: 1 } ].equals({ a: 1, b: 2})", function() {
+         assert.ok(!array([{ a: 1 }]).equals([{ a: 1, b: 2 }]));
+       });
      });
    });
-
-   describe('false', function() {
-     it("![ '1' ].equals([ 1 ])", function() {
-       assert.ok(!['1'].equals([ 1 ]));
-     });
-
-
-     it("!['a', 'b', 'c'].equals([ 'a', 'b' ])", function() {
-       assert.ok(!['a', 'b','c'].equals(['a', 'b']));
-     });
-
-     it("!['a', 'b', 'c'].equals('abc')", function() {
-       assert.ok(!['a', 'b','c'].equals('abc'));
-     });
-
-     it("![ function() {} ].equals([function() {}])", function() {
-       assert.ok(![ function() {} ].equals([ function() {} ]));
-     });
-
-     it("![ { a: 1 } ].equals({ a: 1})", function() {
-       assert.ok(![{ a: 1 }].equals([{ a: 1 }]));
-     });
-   });
- });
+});

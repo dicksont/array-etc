@@ -24,32 +24,50 @@
  *
  */
 
-var libmap = {
+var fxmap = {
   'equals' : '../lib/equals.js',
 }
 
-function loadSingle(lib) {
-  var path = libmap[lib];
-  if (!path) return;
+module.exports = function(fxlist) {
+  var methods = {};
+  var Wrapper = function(arr) {
 
-  var abspath = require.resolve(path);
+    if (!(arr instanceof Array))
+      throw new Error('array-etc: First argument(' + arr + ') of initializer must be an array');
 
-  delete require.cache[abspath]; // Force reload
-  require(path);
-}
+    for(fx in methods) {
+      Wrapper[fx] = methods[fx].bind(arr);
+    }
 
-function loadArray(libarr) {
-  for (var i=0; i < libarr.length; i++) {
-    loadSingle(libarr[i]);
+    Wrapper.length = arr.length;
+
+    return Wrapper;
   }
-}
 
-module.exports = function(lib) {
-  if (typeof(lib) == "string") {
-    loadSingle(lib);
-  } else if (lib instanceof Array) {
-    loadArray(lib);
-  } else {
-    throw new Error('array-etc: Parameter lib neither a String nor Array.');
+
+
+  function importMethod(fx) {
+
+    var path = fxmap[fx];
+
+    if (!path) return;
+
+    var abspath = require.resolve(path);
+
+    delete require.cache[abspath]; // Force reload
+
+    methods[fx] = require(path);
+    Wrapper[fx] = methods[fx];
   }
+
+  if (typeof(fxlist) == "string") {
+    fxlist = [ fxlist ];
+  }
+
+  fxlist.map(function(fx) {
+    importMethod(fx)
+  });
+
+
+  return Wrapper;
 }
