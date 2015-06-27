@@ -67,7 +67,7 @@ This creates a custom wrapper function, which you can use to access the individu
 ## Library Files
 
 ### lib/equals.js
-This defines a customizable array comparison method anchored at **Array.prototype.equals**. This universal implementation does not use *JSON.stringify*, which is problematic for arrays containing functions.
+This defines a customizable comparison method for simple arrays anchored at **Array.prototype.equals**. This universal implementation does not use *JSON.stringify*, which is problematic for arrays containing functions.
 
 Comparison is as simple as:
 ```javascript
@@ -103,6 +103,9 @@ array.equals.eq = function(a,b) {
     return JSON.stringify(a) == JSON.stringify(b);
 }
 ```
+
+#### Caveats
+This implementation was designed for simple arrays. It will work for DAG nested arrays as well. However, it might not return for complex arrays with circular dependencies.
 
 
 ## Technical Support

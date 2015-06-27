@@ -29,7 +29,9 @@ var fxmap = {
 }
 
 module.exports = function(fxlist) {
+
   var methods = {};
+
   var Wrapper = function(arr) {
 
     if (!(arr instanceof Array))
@@ -43,8 +45,6 @@ module.exports = function(fxlist) {
 
     return Wrapper;
   }
-
-
 
   function importMethod(fx) {
 
