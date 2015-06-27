@@ -67,7 +67,7 @@ This creates a custom wrapper function, which you can use to access the individu
 ## Library Files
 
 ### lib/equals.js
-This defines a customizable comparison method for simple arrays anchored at **Array.prototype.equals**. This universal implementation does not use *JSON.stringify*, which is problematic for arrays containing functions.
+This defines a customizable comparison method anchored at **Array.prototype.equals** for simple arrays . This universal implementation does not use *JSON.stringify*, which is problematic for arrays containing functions.
 
 Comparison is as simple as:
 ```javascript
