@@ -6,13 +6,17 @@ A collection of handy array methods that works across the various JavaScript pac
 Methods can be included piecewise. E-mail me if you find a Array method that you think should be included because it would be useful for other people as well.
 
 ## Usage
-Accessing these extensions will differ depending on our module system. If we are on *Browser* or *AMD*, we can access these methods directly from an *Array* object. For example, we can do:
+Accessing these extensions will differ depending on our module system.
+
+### Web page
+If we are on *Browser* or *AMD*, we can access these methods directly from an *Array* object. For example, we can do:
 
 ```javascript
 ['a', 'b','c'].equals(['a', 'b'])
 ```
 
-However, if we are on *CommonJS/Node*, we have to access these methods through a wrapper. So instead of the call above, we would have:
+### Node wrapper
+However, if we are on *CommonJS/Node*, we can access these methods through a wrapper. So instead of the call above, we would have:
 
 ```javascript
 array(['a', 'b','c']).equals(['a', 'b'])
@@ -24,10 +28,21 @@ where *array* is a constructed function that wraps around our *Array* of interes
 var array = require('array-etc')(['equals']);
 ```
 
-This extra wrapper is a special arrangement we added on Node, in order to avoid global conflicts with the *Array.prototype* object. We may have other libraries or other versions of this library in our dependency tree. Unbeknownst to us, these libraries may add similiar methods to the *Array.prototype* object. We must attach the methods locally to a wrapping function to avoid these potential collisions.
+This extra wrapper is a special arrangement we added on Node, in order to avoid global conflicts with the *Array.prototype* object. We may have other libraries or other versions of this library in our dependency tree. Unbeknownst to us, these libraries may add methods of similar names to the *Array.prototype* object. We can attach the methods locally to a wrapping function to avoid these potential collisions.
 
-Since unintentional collisions are a lot harder on Browser or with AMD, where the end developer actively controls the loading of the modules, we have not seen a case for extending the wrapping function to these systems as well.
+Since unintentional collisions are a lot harder with script tag loads or AMD, where the end developer actively controls the loading of the modules, we have not seen a case for extending the wrapping function to these systems as well.
 
+### Node loader
+
+Using a wrapper on Node ensures safety. However, it does introduce a speed bump in that a extra function call must be required before the string can be operated.
+
+If safety is not an issue, you can use the direct syntax in Node as well with a loader call. For example:
+
+```javascript
+require('array-etc').load(['equals']);
+```
+
+This will load **equals** into **Array.prototype**
 
 ## Installation
 ### Web page
@@ -104,8 +119,8 @@ array.equals.eq = function(a,b) {
 }
 ```
 
-#### Caveats
-This implementation was designed for simple arrays. It will work for DAG nested arrays as well. However, it might not return for complex arrays with circular dependencies.
+#### Limitations
+This implementation was designed for simple arrays. It should work for DAG nested arrays as well. However, it might not return for complex arrays with circular dependencies.
 
 
 ## Technical Support
