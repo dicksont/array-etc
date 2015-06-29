@@ -1,10 +1,10 @@
 {
   "name": "array-etc",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "main": "node/etc.js",
   "description": "Collection of supplementary JavaScript Array methods that works across module packaging systems and can be included piece-wise",
   "scripts": {
-    "test": "mocha test/test_wrapper.js test/test_equals.js"
+    "test": "mocha test/test_wrapper.js test/test_loader.js test/test_equals.js"
   },
   "devDependencies": {
     "mocha": "^2.2.4",
