@@ -26,27 +26,23 @@
 
 (function(factory) {
 
-  var arrayFactory, assert;
+  var createWrapper, assert;
 
   if (typeof module !== 'undefined' && module && module.exports) { // Node.js & CommonJS
-    arrayFactory = function() { return require('../node/wrapper.js')('equals'); }
-    assert = require('assert');
+    factory(require('assert'), function() { return require('../node/etc.js').wrap('equals') });
   } else {
-    assert = window.assert;
-    arrayFactory = function() {
-      return function(arr) {
-        return arr;
-      }
-    }
+    factory(window.assert, function() { return function(arr) { return arr } });
+    mocha.checkLeaks();
+    mocha.run();
   }
 
-  factory(assert, arrayFactory);
 
-})(function(assert, arrayFactory) {
+
+})(function(assert, createWrapper) {
   describe('Array.prototype.equals', function() {
     var array;
     before(function() {
-      array = arrayFactory();
+      array = createWrapper();
     });
 
     describe('true', function() {
@@ -93,7 +89,7 @@
      var array;
 
      before(function() {
-       array = arrayFactory();
+       array = createWrapper();
 
        var fxCompare = function(a,b) {
          return JSON.stringify(a) == JSON.stringify(b);
@@ -104,7 +100,7 @@
        } else {
          Array.prototype.equals.eq = fxCompare;
        }
-       
+
      });
 
      describe('true', function() {

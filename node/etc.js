@@ -28,8 +28,30 @@ var fxmap = {
   'equals' : '../lib/equals.js',
 }
 
-module.exports = function(fxlist) {
+function importMethods(target, fx) {
 
+  if (fx instanceof Array) {
+    return fx.map(function(fx) {
+      importMethods(target, fx);
+    });
+  }
+
+  var path = fxmap[fx];
+
+  if (!path) return;
+
+  var abspath = require.resolve(path);
+
+  delete require.cache[abspath]; // Force reload
+
+  target = (target instanceof Array)? target : [ target ];
+
+  target.map(function(obj) {
+    obj[fx] = require(path);
+  });
+}
+
+function createWrapper(fxlist) {
   var methods = {};
 
   var Wrapper = function(arr) {
@@ -41,33 +63,15 @@ module.exports = function(fxlist) {
       Wrapper[fx] = methods[fx].bind(arr);
     }
 
-    Wrapper.length = arr.length;
-
     return Wrapper;
   }
 
-  function importMethod(fx) {
-
-    var path = fxmap[fx];
-
-    if (!path) return;
-
-    var abspath = require.resolve(path);
-
-    delete require.cache[abspath]; // Force reload
-
-    methods[fx] = require(path);
-    Wrapper[fx] = methods[fx];
-  }
-
-  if (typeof(fxlist) == "string") {
-    fxlist = [ fxlist ];
-  }
-
-  fxlist.map(function(fx) {
-    importMethod(fx)
-  });
-
+  importMethods([ methods, Wrapper ], fxlist);
 
   return Wrapper;
+}
+
+module.exports = {
+  wrap: createWrapper,
+  load: importMethods.bind(undefined, Array.prototype)
 }

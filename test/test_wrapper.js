@@ -25,7 +25,7 @@
  */
 
  var assert = require('assert');
- var fawrap = require('../node/wrapper.js');
+ var fawrap = require('../node/etc.js').wrap;
 
  describe('wrapper', function() {
 
