@@ -58,6 +58,11 @@
       it("[ 0 ].equals([ 0 ])", function() {
         assert.ok(array([0]).equals([ 0 ]));
       });
+
+      it("[[0 ]].equals([[0]])", function() {
+        assert.ok(array([[0]]).equals([[0]]));
+      });
+
     });
 
     describe('false', function() {
@@ -80,6 +85,10 @@
 
       it("![ { a: 1 } ].equals({ a: 1})", function() {
         assert.ok(!array([{ a: 1 }]).equals([{ a: 1 }]));
+      });
+
+      it("[[0 ]].equals([[0]])", function() {
+        assert.ok(!array([[0]]).equals([0]));
       });
     });
   });
