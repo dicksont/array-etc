@@ -24,55 +24,41 @@
  *
  */
 
-var fxmap = {
-  'equals' : '../lib/equals.js',
-  'twain' : '../lib/twain.js'
-}
 
-function importMethods(target, fx) {
+ (function(factory) {
 
-  if (fx instanceof Array) {
-    return fx.map(function(fx) {
-      importMethods(target, fx);
-    });
-  }
+   var createWrapper, assert;
 
-  var path = fxmap[fx];
+   if (typeof module !== 'undefined' && module && module.exports) { // Node.js & CommonJS
+     factory(require('assert'), function() { return require('../node/etc.js').wrap(['twain', 'equals' ]) });
+   } else {
+     factory(window.assert, function() { return function(arr) { return arr } });
+     mocha.checkLeaks();
+     mocha.run();
+   }
 
-  if (!path) return;
+ })(function(assert, createWrapper) {
+   describe('Array.prototype.twain', function() {
+     var array;
+     before(function() {
+       array = createWrapper();
+     });
 
-  var abspath = require.resolve(path);
+     it("[1].twain() == [[1]]", function() {
+       assert.ok(array(array([1]).twain()).equals([[1]]));
+     });
 
-  delete require.cache[abspath]; // Force reload
+     it("[1,2].twain() == [[1,2]]", function() {
+       assert.ok(array(array([1,2]).twain()).equals([[1,2]]));
+     });
 
-  target = (target instanceof Array)? target : [ target ];
+     it("[1,2,3].twain() == [[1,2],[3]]", function() {
+       assert.ok(array(array([1,2,3]).twain()).equals([[1,2],[3]]));
+     });
 
-  target.map(function(obj) {
-    obj[fx] = require(path);
-  });
-}
+      it("[1,2,3,4].twain() == [[1,2],[3,4]]", function() {
+        assert.ok(array(array([1,2,3,4]).twain()).equals([[1,2],[3,4]]));
+      });
 
-function createWrapper(fxlist) {
-  var methods = {};
-
-  var Wrapper = function(arr) {
-
-    if (!(arr instanceof Array))
-      throw new Error('array-etc: First argument(' + arr + ') of initializer must be an array');
-
-    for(fx in methods) {
-      Wrapper[fx] = methods[fx].bind(arr);
-    }
-
-    return Wrapper;
-  }
-
-  importMethods([ methods, Wrapper ], fxlist);
-
-  return Wrapper;
-}
-
-module.exports = {
-  wrap: createWrapper,
-  load: importMethods.bind(undefined, Array.prototype)
-}
+   });
+});
