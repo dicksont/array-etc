@@ -1,6 +1,6 @@
 {
   "name": "array-etc",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "node/etc.js",
   "description": "Collection of supplementary JavaScript Array methods that works across module packaging systems and can be included piece-wise",
   "scripts": {
