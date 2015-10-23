@@ -61,7 +61,7 @@ function createWrapper(fxlist) {
       throw new Error('array-etc: First argument(' + arr + ') of initializer must be an array');
 
     for(fx in methods) {
-      Wrapper[fx] = methods[fx].bind(arr);
+      Wrapper[fx] = methods[fx].bind(undefined,arr);
     }
 
     return Wrapper;
